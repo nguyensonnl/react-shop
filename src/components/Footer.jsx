@@ -46,7 +46,7 @@ const footerCustomerLinks = [
 
 const Footer = () => {
     return (
-        <footer>
+        <footer className='footer'>
             <div className='container'>
                 <Grid
                     col={4}
