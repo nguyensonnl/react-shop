@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import { useNavigate } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
+import { addItem } from '../redux/shopping-cart/cartitemsSlide';
+
 import Button from './Button';
 import numberWithCommas from '../utils/numberWithCommas';
 
@@ -10,7 +13,16 @@ const ProductView = props => {
 
     const navigate = useNavigate();
 
-    const product = props.product;
+    const dispatch = useDispatch();
+
+    let product = props.product;
+
+    if (product === undefined) product = {
+        price: 0,
+        title: "",
+        colors: [],
+        size: []
+    }
 
     const [previewImg, setPreviewImg] = useState(product.image01);
 
@@ -50,12 +62,31 @@ const ProductView = props => {
     }
 
     const addToCart = () => {
-        if (check()) console.log({ color, size, quantity })
+        if (check()) {
+            dispatch(addItem({
+                slug: product.slug,
+                color: color,
+                size: size,
+                quantity: quantity,
+                price: product.price
+            }))
+
+            alert("sucess")
+        }
     }
 
     const goToCart = () => {
-        if (check())
+        if (check()) {
+            dispatch(addItem({
+                slug: product.slug,
+                color: color,
+                size: size,
+                quantity: quantity,
+                price: product.price
+            }))
             navigate('/cart')
+        }
+
     }
 
     return (
@@ -166,7 +197,7 @@ const ProductView = props => {
 };
 
 ProductView.propTypes = {
-    product: PropTypes.object.isRequired
+    product: PropTypes.object
 };
 
 export default ProductView;

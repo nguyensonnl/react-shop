@@ -1,3 +1,5 @@
+import { cartItemsSlice } from '../../redux/shopping-cart/cartitemsSlide';
+
 const product_01_image_01 = require('../images/products/product-01 (1).jpg');
 const product_01_image_02 = require('../images/products/product-01 (2).jpg');
 // const product_01_image_03 = require('../images/products/product-01 (3).jpg').default
@@ -248,10 +250,24 @@ const getProducts = (count) => {
 
 const getProductBySlug = (slug) => products.find(e => e.slug === slug)
 
+const getCartItemsDetail = (cartItems) => {
+    let res = [];
+    if (cartItems.length > 0) {
+        cartItems.forEach(e => {
+            res.push({
+                ...e,
+                product: getProductBySlug(e.slug)
+            })
+        })
+    }
+    return res;
+}
+
 const productData = {
     getAllProducts,
     getProducts,
-    getProductBySlug
+    getProductBySlug,
+    getCartItemsDetail
 }
 
 export default productData;
